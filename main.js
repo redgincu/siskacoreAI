@@ -41,6 +41,7 @@ const KOTA_DB = {
  * @returns {object} - { origin: string, destination: string, weight: number }
  */
 function parseOngkirRequest(message) {
+// ... (Kode Logika parseOngkirRequest tetap sama) ...
     const lower = message.toLowerCase();
     
     // Default values
@@ -81,6 +82,7 @@ function parseOngkirRequest(message) {
  * [ver3] Mengambil data Ongkir LIVE dari RajaOngkir
  */
 async function fetchRajaOngkir(originName, destName, weightGrams) {
+// ... (Kode Logika fetchRajaOngkir tetap sama) ...
     // Gunakan 'short-term memory' KOTA_DB untuk konversi nama ke ID
     const originId = KOTA_DB[originName.toLowerCase()];
     const destId = KOTA_DB[destName.toLowerCase()];
@@ -130,6 +132,7 @@ async function fetchRajaOngkir(originName, destName, weightGrams) {
  * Mengambil data Jadwal Sholat LIVE dari Al-Adhan
  */
 async function fetchPrayerTimes(lat, lon) {
+// ... (Kode Logika fetchPrayerTimes tetap sama) ...
     if (!lat || !lon) return null;
     try {
         const response = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=20&school=1`); 
@@ -154,6 +157,7 @@ async function fetchPrayerTimes(lat, lon) {
  * Mengambil data Cuaca & AQI LIVE
  */
 async function fetchWeatherAndAqi(lat, lon) {
+// ... (Kode Logika fetchWeatherAndAqi tetap sama) ...
     if (!lat || !lon) return { weather: null, aqi: null };
     let weatherData = null, aqiData = null;
     try {
@@ -190,6 +194,7 @@ async function fetchWeatherAndAqi(lat, lon) {
  * Mengambil data POI (Kuliner/Wisata/Masjid) LIVE dari Foursquare
  */
 async function fetchFoursquarePlaces(lat, lon, intent) {
+// ... (Kode Logika fetchFoursquarePlaces tetap sama) ...
     if (!lat || !lon || !API_KEYS.FOURSQUARE) {
         console.error("Foursquare API key or location missing");
         return null;
@@ -225,6 +230,7 @@ async function fetchFoursquarePlaces(lat, lon, intent) {
  * [ver3] Membuat respons untuk RajaOngkir
  */
 function generateOngkirOutput(data, origin, dest, weight) {
+// ... (Kode Logika generateOngkirOutput tetap sama) ...
     if (data.error) {
         return data.error; // Kembalikan pesan error dari API atau parser
     }
@@ -270,6 +276,7 @@ function generateOngkirOutput(data, origin, dest, weight) {
 
 
 function generatePrayerOutput(data, intent) {
+// ... (Kode Logika generatePrayerOutput tetap sama) ...
     if (!data) return "Maaf, saya gagal mengambil jadwal sholat untuk lokasi Anda. Pastikan GPS aktif dan coba lagi.";
     let sapaan = 'Tentu';
     let responseText = `${sapaan}! Berikut jadwal sholat untuk **${data.city}** hari ini (${data.date}) dari API Al-Adhan (Live):\n\n`;
@@ -289,6 +296,7 @@ function generatePrayerOutput(data, intent) {
 }
 
 function generateWeatherOutput(weather, aqi) {
+// ... (Kode Logika generateWeatherOutput tetap sama) ...
     if (!weather) return "Maaf, saya gagal mengambil data cuaca untuk lokasi Anda. Pastikan GPS aktif dan coba lagi.";
     let sapaan = 'Tentu';
     let aqiRecommendation = "Data kualitas udara (AQI) tidak tersedia untuk lokasi ini.";
@@ -301,6 +309,7 @@ function generateWeatherOutput(weather, aqi) {
 }
 
 function generateFoursquareOutput(data, intent) {
+// ... (Kode Logika generateFoursquareOutput tetap sama) ...
     if (!data || data.length === 0) return `Maaf, saya tidak menemukan ${intent} terdekat di lokasi Anda saat ini. (Live Foursquare)`;
     let sapaan = 'Tentu';
     let title = "tempat";
@@ -319,6 +328,7 @@ function generateFoursquareOutput(data, intent) {
 // ====================================================================
 
 async function handler(req) {
+// ... (Kode Logika handler tetap sama) ...
     // OPTIMALISASI KEAMANAN (ver3): Dapatkan URL frontend Anda dari environment variables
     const allowedOrigin = Deno.env.get("FRONTEND_URL") || "*"; // Default ke * jika tidak disetel
 
